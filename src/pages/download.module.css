@@ -1,0 +1,98 @@
+.head {
+  /* Pull under the transparent navbar (like the home hero) so the frosted bar floats
+     over this gradient instead of reading as a solid dark strip. */
+  margin-top: calc(-1 * var(--ifm-navbar-height));
+  padding: calc(3.5rem + var(--ifm-navbar-height)) 0 1.5rem;
+  text-align: center;
+  /* Same theme-aware gradient as the home hero. */
+  background: var(--hero-grad);
+}
+
+.sub {
+  color: var(--ifm-color-content-secondary);
+  font-size: 1.1rem;
+}
+
+.note {
+  margin: 1.5rem auto;
+  padding: 0.8rem 1rem;
+  max-width: 760px;
+  border: 1px solid var(--ifm-color-warning-dark);
+  border-radius: 10px;
+  background: rgba(255, 196, 0, 0.08);
+  font-size: 0.92rem;
+}
+
+/* Platforms in a single horizontal row (mobile first), collapsing on narrow viewports. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin: 1rem 0 3rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.4rem;
+  /* Match the home feature cards: outline-only (transparent), theme-aware border, and
+     an accent border on hover. */
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 12px;
+  background: transparent;
+  transition: border-color 0.15s ease;
+}
+.card:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+/* Animated text-graph marker (shared with the home feature cards), in place of an emoji. */
+.platformGraph {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 1.2rem;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.7rem;
+  min-height: 1.2rem;
+}
+
+.os {
+  margin: 0 0 0.4rem;
+  font-size: 1.4rem;
+}
+
+.blurb {
+  color: var(--ifm-color-content-secondary);
+  font-size: 0.95rem;
+}
+
+.builds {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  /* Pin the download buttons to the bottom so the row of cards lines up. */
+  margin-top: auto;
+}
+
+.buildNote {
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.after {
+  margin: 1rem 0 4rem;
+  max-width: 760px;
+}
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

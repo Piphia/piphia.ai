@@ -1,0 +1,251 @@
+.hero {
+  /* Pull the hero up UNDER the transparent navbar so its gradient shows through the
+     frosted bar (otherwise the bar floats over the flat page background and reads as a
+     dark/solid strip). The extra top padding keeps the hero content below the navbar. */
+  margin-top: calc(-1 * var(--ifm-navbar-height));
+  padding: calc(5rem + var(--ifm-navbar-height)) 0 4rem;
+  text-align: center;
+  /* Theme-aware gradient (defined per-theme in src/css/custom.css). */
+  background: var(--hero-grad);
+}
+
+.heroTitle {
+  font-size: 3.4rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.6rem;
+}
+
+.heroTagline {
+  font-size: 1.3rem;
+  max-width: 720px;
+  margin: 0 auto 1.8rem;
+  color: var(--ifm-color-content-secondary);
+}
+
+.heroButtons {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.heroNote {
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--ifm-color-content-secondary);
+}
+
+/* Theme-aware screenshot carousel — the real product, right under the abstract hero
+   graph. Slides crossfade on a timer; ThemedImage swaps each slide's dark/light shot
+   to match the site theme. Frame ratio follows the wide (full-app) shots; the narrow
+   button shot is `contain`-ed (centred, slim side margins) so nothing is cropped. */
+.showcase {
+  margin-top: -1.5rem;
+  padding: 0 0 1.5rem;
+}
+.shot {
+  position: relative;
+  max-width: 1060px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--ifm-toc-border-color);
+  box-shadow: 0 26px 64px -26px rgba(0, 0, 0, 0.5);
+  background: var(--ifm-background-surface-color);
+  aspect-ratio: 4 / 3;
+}
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none;
+}
+.slideOn {
+  opacity: 1;
+  pointer-events: auto;
+}
+.shotImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Phone companion: a SEPARATE element overlaid on the desktop shot (not merged
+   into one image) so each breakpoint can place/scale it independently. The source
+   webp is already the phone-screen crop; a rounded dark border fakes the bezel. */
+.mobileShot {
+  position: absolute;
+  right: 2.5%;
+  bottom: 2.5%;
+  height: 86%;
+  width: auto;
+  border-radius: 20px;
+  border: 3px solid rgba(18, 20, 26, 0.92);
+  box-shadow: 0 18px 46px -10px rgba(0, 0, 0, 0.6);
+  background: #0d0f13;
+  z-index: 3;
+}
+/* Narrow site viewport (phone): keep the pair unified but more compact. */
+@media (max-width: 600px) {
+  .mobileShot {
+    height: 78%;
+    right: 1.5%;
+    bottom: 1.5%;
+    border-width: 2px;
+    border-radius: 13px;
+  }
+}
+.dots {
+  position: absolute;
+  left: 50%;
+  bottom: 0.7rem;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.32);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  z-index: 2;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.dot:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+.dotOn {
+  background: #fff;
+  transform: scale(1.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+}
+
+.features {
+  padding: 3.5rem 0;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+.featureCard {
+  padding: 1.6rem 1.5rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 12px;
+  background: transparent;
+  transition: border-color 0.15s ease;
+}
+
+.featureCard:hover {
+  border-color: var(--ifm-color-primary);
+}
+
+/* minimalist marker in place of the old emoji — a small accent "text-graph" */
+.featureGraph {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1.15rem;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--ifm-color-primary);
+  margin-bottom: 1rem;
+}
+
+.featureTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+}
+
+.featureBody {
+  color: var(--ifm-color-content-secondary);
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* How-it-works band — the local data flow in three steps. */
+.how {
+  padding: 1rem 0 3.5rem;
+  text-align: center;
+}
+
+.howHead {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.howSub {
+  color: var(--ifm-color-content-secondary);
+  max-width: 680px;
+  margin: 0 auto 2.4rem;
+}
+
+.howGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+  text-align: left;
+}
+
+.howStep {
+  border-top: 2px solid var(--ifm-color-primary);
+  padding-top: 1rem;
+}
+
+.howNum {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.howStepTitle {
+  font-size: 1.2rem;
+  margin: 0 0 0.5rem;
+}
+
+.howStepBody {
+  color: var(--ifm-color-content-secondary);
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.cta {
+  padding: 4rem 0 5rem;
+  text-align: center;
+}
+
+.ctaSub {
+  color: var(--ifm-color-content-secondary);
+  margin-bottom: 1.4rem;
+}
+
+@media (max-width: 996px) {
+  .featureGrid {
+    grid-template-columns: 1fr;
+  }
+  .howGrid {
+    grid-template-columns: 1fr;
+  }
+  .heroTitle {
+    font-size: 2.6rem;
+  }
+}

@@ -1,0 +1,35 @@
+/* The animated wordmark "piphia.ai". Monospace so its 9 cells keep a constant
+   width while the name and the formula "π + φ + α" swap in place — the title never
+   jitters or re-centres. */
+.head {
+  font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  white-space: nowrap;
+}
+
+/* resolved readable letters ("piphia.ai") — inherit the big title colour */
+.text {
+  color: inherit;
+}
+
+/* graph glyphs + cursor — the brand accent (the "decoding" colour) */
+.glyph {
+  color: var(--ifm-color-primary);
+}
+
+/* π · φ · α each carry a meaning-tied hue; the + operators stay dim. No "official"
+   colours exist for these constants — π keeps the brand blue (the Pi-Day tradition),
+   φ is gold (it IS the golden ratio), α is a seed/origin green (alpha = the first
+   principle / beginning). Light defaults here; dark overrides below. */
+.pi { color: #4355b9; }
+.phi { color: #a8801c; }
+.alpha { color: #4f8a45; }
+.op { color: #9aa0a6; }
+:global([data-theme='dark']) .pi { color: #6c99bb; }
+:global([data-theme='dark']) .phi { color: #d8b35a; }
+:global([data-theme='dark']) .alpha { color: #84b06f; }
+:global([data-theme='dark']) .op { color: #7d8893; }
+
+.cursor {
+  color: var(--ifm-color-primary);
+  font-weight: inherit;
+}

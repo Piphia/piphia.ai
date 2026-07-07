@@ -1,0 +1,21 @@
+<svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Core.md app-icon tile (enlarged mark) -->
+  <rect x="4" y="4" width="92" height="92" rx="22" fill="#4355b9"/>
+  <g stroke="#ffffff" stroke-width="3.83" stroke-linecap="round">
+    <line x1="50.89" y1="49.09" x2="64.10" y2="49.09"/>
+    <line x1="50.89" y1="49.09" x2="37.12" y2="36.47"/>
+    <line x1="50.89" y1="49.09" x2="52.89" y2="71.88"/>
+    <line x1="50.89" y1="49.09" x2="66.96" y2="28.12"/>
+    <line x1="50.89" y1="49.09" x2="21.81" y2="54.23"/>
+    <line x1="50.89" y1="49.09" x2="78.19" y2="66.45"/>
+  </g>
+  <g fill="#ffffff">
+    <circle cx="50.89" cy="49.09" r="7.66"/>
+    <circle cx="64.10" cy="49.09" r="6.81"/>
+    <circle cx="37.12" cy="36.47" r="6.81"/>
+    <circle cx="52.89" cy="71.88" r="6.81"/>
+    <circle cx="66.96" cy="28.12" r="6.81"/>
+    <circle cx="21.81" cy="54.23" r="6.81"/>
+    <circle cx="78.19" cy="66.45" r="6.81"/>
+  </g>
+</svg>

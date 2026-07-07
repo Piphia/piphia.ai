@@ -1,0 +1,29 @@
+/* Animated hero tagline — monospace so character cells stay put while the
+   cursor sweeps and glyphs swap in place (no layout jitter). */
+.tagline {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  max-width: 780px;
+  margin: 0 auto 1.8rem;
+  white-space: pre-wrap; /* preserve the spaces that hold the word layout */
+  overflow-wrap: break-word;
+  color: var(--ifm-color-content-secondary);
+  min-height: 3.2em; /* reserve ~2 lines so wrapping never shifts the page */
+}
+
+/* resolved letters — the calm tagline tone */
+.text {
+  color: var(--ifm-color-content-secondary);
+}
+
+/* graph glyphs + cursor — the brand accent (the "decoding" colour) */
+.glyph {
+  color: var(--ifm-color-primary);
+}
+
+.cursor {
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+}

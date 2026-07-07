@@ -1,0 +1,19 @@
+/* Hero 3D-graph stage. Transparent canvas so the hero gradient shows through;
+   sits above the title/buttons. */
+.graph {
+  width: 100%;
+  max-width: 620px;
+  height: 340px;
+  margin: 0 auto 1rem;
+  cursor: grab;
+}
+
+.graph:active {
+  cursor: grabbing;
+}
+
+@media (max-width: 996px) {
+  .graph {
+    height: 260px;
+  }
+}

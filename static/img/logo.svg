@@ -1,0 +1,20 @@
+<svg width="32" height="32" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Core.md mark — V3b exact phyllotaxis (golden angle 137.50776°, Vogel radii, equal seeds, phase=golden angle). bbox-centred. -->
+  <g stroke="#4355b9" stroke-width="4.71" stroke-linecap="round">
+    <line x1="51.10" y1="48.88" x2="67.32" y2="48.88"/>
+    <line x1="51.10" y1="48.88" x2="34.18" y2="33.38"/>
+    <line x1="51.10" y1="48.88" x2="53.55" y2="76.88"/>
+    <line x1="51.10" y1="48.88" x2="70.84" y2="23.12"/>
+    <line x1="51.10" y1="48.88" x2="15.37" y2="55.20"/>
+    <line x1="51.10" y1="48.88" x2="84.63" y2="70.21"/>
+  </g>
+  <g fill="#4355b9">
+    <circle cx="51.10" cy="48.88" r="9.41"/>
+    <circle cx="67.32" cy="48.88" r="8.37"/>
+    <circle cx="34.18" cy="33.38" r="8.37"/>
+    <circle cx="53.55" cy="76.88" r="8.37"/>
+    <circle cx="70.84" cy="23.12" r="8.37"/>
+    <circle cx="15.37" cy="55.20" r="8.37"/>
+    <circle cx="84.63" cy="70.21" r="8.37"/>
+  </g>
+</svg>

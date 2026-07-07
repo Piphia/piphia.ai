@@ -1,0 +1,9 @@
+# Piphia — robots.txt
+# Marketing + documentation site; all content here is public and indexable.
+# The Sitemap URL must match docusaurus.config.ts → PRODUCT.url (update both
+# together when the production domain is finalised).
+
+User-agent: *
+Allow: /
+
+Sitemap: https://piphia.ai/sitemap.xml
