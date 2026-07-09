@@ -8,7 +8,10 @@ import styles from './download.module.css';
 
 type Product = {name: string; org: string; repo: string};
 
-type Build = {label: string; note?: string};
+// `asset` = a GitHub release asset filename → the button becomes a direct,
+// version-less download (releases/latest/download/<asset>, always the latest
+// release). Builds without an `asset` fall back to the releases page.
+type Build = {label: string; note?: string; asset?: string};
 type Platform = {os: string; blurb: string; builds: Build[]};
 
 // Mobile first, then desktop platforms — laid out in a single horizontal row.
@@ -25,10 +28,11 @@ const PLATFORMS: Platform[] = [
   {
     os: 'macOS',
     blurb:
-      'Self-contained .app — embeds the backend and a Python runtime. Apple Silicon by default, with an optional universal build for Intel Macs.',
+      'Self-contained .app — embeds the backend and a Python runtime. Native builds for Apple Silicon and Intel, plus a universal build for both.',
     builds: [
-      {label: 'Apple Silicon (.app)'},
-      {label: 'Universal (.app)', note: 'Intel + Apple Silicon'},
+      {label: 'Apple Silicon (.dmg)', asset: 'Piphia-macos-apple-silicon.dmg'},
+      {label: 'Intel (.dmg)', asset: 'Piphia-macos-intel.dmg'},
+      {label: 'Universal (.dmg)', note: 'Intel + Apple Silicon', asset: 'Piphia-macos-universal.dmg'},
     ],
   },
   {
@@ -49,6 +53,7 @@ export default function Download(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
   const product = siteConfig.customFields!.product as Product;
   const releasesUrl = `https://github.com/${product.org}/${product.repo}/releases/latest`;
+  const dlBase = `${releasesUrl}/download`;
 
   return (
     <Layout title="Download" description={`Download ${siteConfig.title} for mobile, macOS, Windows and Linux`}>
@@ -63,8 +68,9 @@ export default function Download(): ReactNode {
 
       <main className="container">
         <div className={styles.note}>
-          ⚠️ Release links point at the latest GitHub release. Until the first
-          release is published, the buttons below open the releases page.
+          macOS builds are ready below — served from GitHub Releases. Mobile,
+          Windows and Linux downloads are on the way; those buttons open the
+          releases page for now.
         </div>
 
         <div className={styles.grid}>
@@ -77,7 +83,10 @@ export default function Download(): ReactNode {
               <p className={styles.blurb}>{p.blurb}</p>
               <div className={styles.builds}>
                 {p.builds.map((b) => (
-                  <Link key={b.label} className="button button--primary button--block" to={releasesUrl}>
+                  <Link
+                    key={b.label}
+                    className="button button--primary button--block"
+                    to={b.asset ? `${dlBase}/${b.asset}` : releasesUrl}>
                     {b.label}
                     {b.note ? <span className={styles.buildNote}> · {b.note}</span> : null}
                   </Link>
