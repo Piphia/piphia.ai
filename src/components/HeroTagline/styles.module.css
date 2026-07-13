@@ -13,6 +13,13 @@
   min-height: 3.2em; /* reserve ~2 lines so wrapping never shifts the page */
 }
 
+/* Pixel/CLI theme: the tagline is PINNED to Terminus (a monospace bitmap face —
+   keeps the decode animation jitter-free) regardless of the font picker, so the
+   hero reads title=Tamzen / tagline=Terminus / rest=picker. Dark/light unchanged. */
+:global(html[data-pixel='on']) .tagline {
+  font-family: 'Terminus', 'Fira Code', monospace;
+}
+
 /* resolved letters — the calm tagline tone */
 .text {
   color: var(--ifm-color-content-secondary);

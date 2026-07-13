@@ -1,0 +1,380 @@
+/* =========================================================================
+   PIXEL / CLI THEME  —  a cyan CRT terminal (matches the Piphia TUI).
+
+   A THIRD, opt-in theme that layers on top of the existing dark/light ones.
+   It is fully self-contained: every rule is scoped under `html[data-pixel='on']`,
+   so when the toggle is OFF nothing here applies and dark/light are untouched.
+   When ON it overrides colours + fonts regardless of the underlying dark/light
+   (the terminal look is its own world). See src/components/PixelToggle +
+   src/theme/Root, and the no-FOUC bootstrap script in docusaurus.config.ts.
+
+   Font: Pixelify Sans (pixel display, latin + cyrillic) for headings / brand /
+   UI chrome; the site's existing Fira Code (monospace, cyrillic) carries body
+   and code so long-form docs stay readable in RU + EN.
+   ========================================================================= */
+
+@font-face {
+  font-family: 'Pixelify Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/pixelify-sans-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Pixelify Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/pixelify-sans-latin-700-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191,
+    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Pixelify Sans';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/pixelify-sans-cyrillic-400-normal.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Pixelify Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/pixelify-sans-cyrillic-700-normal.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* Optional CONSOLE fonts — selectable from the pixel toggle's font <select>
+   (data-pixfont on <html>). Bitmap/terminal typefaces; self-hosted. Cozette +
+   Terminus cover cyrillic, Tamzen is latin-only. */
+@font-face {
+  font-family: 'Cozette';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/cozette.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Terminus';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/terminus.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Tamzen';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/tamzen-8x16r.ttf') format('truetype');
+}
+
+/* ---- Palette + Infima variable overrides -------------------------------- */
+html[data-pixel='on'] {
+  --px-bg: #0a0e14;            /* deep terminal navy-black            */
+  --px-bg-raised: #10161f;     /* raised surfaces / code / chrome      */
+  --px-fg: #c8d2dc;            /* soft phosphor — body text (readable) */
+  --px-cyan: #5cd8e6;         /* bright cyan — accents / headings */
+  --px-cyan-dim: #3f97a3;     /* dimmed cyan — secondary / muted     */
+  --px-amber: #ffb000;         /* amber — the second phosphor accent   */
+  --px-border: #1b2b3a;        /* dim cyan hairline                    */
+  --px-glow: rgba(92, 216, 230, 0.45);
+
+  color-scheme: dark;
+
+  /* Map the terminal palette onto Infima so every built-in component follows. */
+  --ifm-color-primary: var(--px-cyan);
+  --ifm-color-primary-dark: #49c3d1;
+  --ifm-color-primary-darker: #43b3c0;
+  --ifm-color-primary-darkest: #37929e;
+  --ifm-color-primary-light: #7ce2ee;
+  --ifm-color-primary-lighter: #93e9f2;
+  --ifm-color-primary-lightest: #b7f1f7;
+
+  --app-chrome: var(--px-bg-raised);
+  --ifm-background-color: var(--px-bg);
+  --ifm-background-surface-color: var(--px-bg-raised);
+  --ifm-navbar-background-color: var(--px-bg-raised);
+
+  --ifm-font-color-base: var(--px-fg);
+  --ifm-heading-color: var(--px-cyan);
+  --ifm-color-content-secondary: var(--px-cyan-dim);
+  --ifm-link-color: var(--px-cyan);
+  --ifm-link-hover-color: var(--px-amber);
+
+  --ifm-toc-border-color: var(--px-border);
+  --ifm-color-emphasis-200: #111a26;
+  --ifm-color-emphasis-300: var(--px-border);
+  --ifm-hr-background-color: var(--px-border);
+  --ifm-code-background: #0b121c;
+  --ifm-code-color: var(--px-amber);
+  --docusaurus-highlighted-code-line-bg: rgba(92, 216, 230, 0.12);
+
+  /* Fonts are indirected through two vars so the toggle's <select> can swap the
+     whole theme's typeface (data-pixfont on <html>, overrides below). Default =
+     Pixelify Sans display + Fira Code body. */
+  --px-display-font: 'Pixelify Sans', 'Fira Code', monospace;
+  --px-body-font: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --ifm-font-family-base: var(--px-body-font);
+  --ifm-font-family-monospace: var(--px-body-font);
+  --ifm-heading-font-family: var(--px-display-font);
+
+  /* Everything squares off — a terminal has no rounded corners. */
+  --ifm-global-radius: 0px;
+  --ifm-button-border-radius: 0px;
+  --ifm-card-border-radius: 0px;
+  --ifm-code-border-radius: 0px;
+
+  /* Hero: a cyan bloom over the terminal black. */
+  --hero-grad:
+    radial-gradient(1100px 460px at 50% -12%, rgba(92, 216, 230, 0.14), transparent 70%),
+    linear-gradient(180deg, #0c1119 0%, #080b12 60%, var(--px-bg) 100%);
+}
+
+/* Console-font picker (the toggle's <select> sets data-pixfont). Each option
+   swaps BOTH the display + body font so the whole theme becomes that terminal
+   typeface; the default (no attribute) keeps Pixelify Sans + Fira Code. */
+html[data-pixel='on'][data-pixfont='cozette'] {
+  --px-display-font: 'Cozette', 'Fira Code', monospace;
+  --px-body-font: 'Cozette', 'Fira Code', monospace;
+}
+html[data-pixel='on'][data-pixfont='terminus'] {
+  --px-display-font: 'Terminus', 'Fira Code', monospace;
+  --px-body-font: 'Terminus', 'Fira Code', monospace;
+}
+html[data-pixel='on'][data-pixfont='tamzen'] {
+  --px-display-font: 'Tamzen', 'Fira Code', monospace;
+  --px-body-font: 'Tamzen', 'Fira Code', monospace;
+}
+html[data-pixel='on'][data-pixfont='firacode'] {
+  --px-display-font: 'Fira Code', monospace;
+  --px-body-font: 'Fira Code', monospace;
+}
+
+/* Kill every rounded corner (cards, code, images, avatars, buttons…). */
+html[data-pixel='on'] *,
+html[data-pixel='on'] *::before,
+html[data-pixel='on'] *::after {
+  border-radius: 0 !important;
+}
+
+html[data-pixel='on'] body {
+  background: var(--px-bg);
+  color: var(--px-fg);
+  /* Crisp bitmap glyphs — don't let the OS smooth the pixel font into mush. */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- CRT overlay: faint horizontal scanlines + a vignette --------------- */
+html[data-pixel='on'] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0,
+      rgba(0, 0, 0, 0) 2px,
+      rgba(0, 0, 0, 0.22) 3px,
+      rgba(0, 0, 0, 0.22) 4px
+    ),
+    radial-gradient(120% 120% at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.45) 100%);
+  mix-blend-mode: multiply;
+}
+
+/* A very slow scanline drift + gentle flicker — motion only, so it's dropped
+   entirely under prefers-reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-pixel='on'] body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: linear-gradient(rgba(92, 216, 230, 0.03), rgba(92, 216, 230, 0));
+    height: 40px;
+    animation: px-scan 7.5s linear infinite;
+    will-change: transform;
+  }
+  @keyframes px-scan {
+    from { transform: translateY(-40px); }
+    to   { transform: translateY(100vh); }
+  }
+  html[data-pixel='on'] .hero__title,
+  html[data-pixel='on'] .navbar__brand {
+    animation: px-flicker 6s steps(60) infinite;
+  }
+  @keyframes px-flicker {
+    0%, 97%, 100% { opacity: 1; }
+    98%           { opacity: 0.82; }
+    99%           { opacity: 0.94; }
+  }
+}
+
+/* ---- Typography: pixel display, glowing headings ------------------------ */
+html[data-pixel='on'] h1,
+html[data-pixel='on'] h2,
+html[data-pixel='on'] h3,
+html[data-pixel='on'] h4,
+html[data-pixel='on'] .hero__title,
+html[data-pixel='on'] .navbar__brand,
+html[data-pixel='on'] .navbar__title {
+  font-family: var(--px-display-font) !important;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 6px var(--px-glow);
+}
+html[data-pixel='on'] h1,
+html[data-pixel='on'] .hero__title {
+  text-shadow: 0 0 10px var(--px-glow), 0 0 2px var(--px-cyan);
+}
+
+/* Blinking block cursor after the hero title — the terminal prompt. */
+html[data-pixel='on'] .hero__title::after {
+  content: '\2588';           /* █ */
+  margin-left: 0.12em;
+  color: var(--px-cyan);
+  text-shadow: 0 0 8px var(--px-glow);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-pixel='on'] .hero__title::after {
+    animation: px-blink 1.05s steps(1) infinite;
+  }
+  @keyframes px-blink { 50% { opacity: 0; } }
+}
+
+html[data-pixel='on'] ::selection {
+  background: var(--px-cyan);
+  color: var(--px-bg);
+  text-shadow: none;
+}
+
+/* ---- Links: bright phosphor, glow on hover ------------------------------ */
+html[data-pixel='on'] a {
+  color: var(--px-cyan);
+  text-decoration: none;
+}
+html[data-pixel='on'] a:hover {
+  color: var(--px-amber);
+  text-shadow: 0 0 6px rgba(255, 176, 0, 0.5);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- Buttons: bracketed terminal commands ------------------------------- */
+html[data-pixel='on'] .button {
+  font-family: var(--px-display-font);
+  background: transparent;
+  color: var(--px-cyan);
+  border: 1px solid var(--px-cyan);
+  box-shadow: 0 0 0 1px transparent, inset 0 0 12px rgba(92, 216, 230, 0.06);
+  text-shadow: 0 0 6px var(--px-glow);
+  transition: background 0.12s steps(2), box-shadow 0.12s steps(2), color 0.12s;
+}
+html[data-pixel='on'] .button::before { content: '['; margin-right: 0.5ch; opacity: 0.7; }
+html[data-pixel='on'] .button::after  { content: ']'; margin-left: 0.5ch;  opacity: 0.7; }
+html[data-pixel='on'] .button:hover {
+  background: var(--px-cyan);
+  color: var(--px-bg);
+  text-shadow: none;
+  box-shadow: 0 0 18px var(--px-glow);
+}
+html[data-pixel='on'] .button--secondary {
+  color: var(--px-amber);
+  border-color: var(--px-amber);
+  text-shadow: 0 0 6px rgba(255, 176, 0, 0.4);
+}
+html[data-pixel='on'] .button--secondary:hover {
+  background: var(--px-amber);
+  color: var(--px-bg);
+  box-shadow: 0 0 18px rgba(255, 176, 0, 0.5);
+}
+
+/* ---- Chrome: navbar, sidebar, footer, cards ----------------------------- */
+html[data-pixel='on'] .navbar {
+  background: var(--px-bg-raised) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom: 1px solid var(--px-border);
+  box-shadow: 0 1px 0 rgba(92, 216, 230, 0.15);
+}
+html[data-pixel='on'] .navbar__link,
+html[data-pixel='on'] .navbar__brand {
+  color: var(--px-fg);
+}
+html[data-pixel='on'] .navbar__link:hover,
+html[data-pixel='on'] .navbar__link--active {
+  color: var(--px-cyan);
+  text-shadow: 0 0 6px var(--px-glow);
+}
+/* Swap the round navbar mark for the square-node PIXEL logo (cyan), with a phosphor
+   bloom. `content: url()` on the replaced <img> keeps its box size; Docusaurus renders
+   a light + dark themed <img> and only the active one shows, so this hits whichever is
+   visible. Dark/light keep the round indigo logo (img/logo*.svg). */
+html[data-pixel='on'] .navbar__logo img {
+  content: url('/img/logo-pixel.svg');
+  filter: drop-shadow(0 0 4px rgba(92, 216, 230, 0.5));
+}
+html[data-pixel='on'] .theme-doc-sidebar-container {
+  background: var(--px-bg);
+  border-right: 1px solid var(--px-border);
+}
+html[data-pixel='on'] .menu__link--active,
+html[data-pixel='on'] .table-of-contents__link--active {
+  color: var(--px-cyan);
+  text-shadow: 0 0 6px var(--px-glow);
+}
+html[data-pixel='on'] .menu__link:hover { background: rgba(92, 216, 230, 0.06); }
+
+html[data-pixel='on'] .card,
+html[data-pixel='on'] .theme-admonition {
+  background: var(--px-bg-raised);
+  border: 1px solid var(--px-border);
+}
+
+html[data-pixel='on'] .footer,
+html[data-pixel='on'] .footer--dark {
+  background: var(--px-bg) !important;
+  border-top: 1px solid var(--px-border);
+  --ifm-footer-background-color: var(--px-bg);
+  --ifm-footer-color: var(--px-cyan-dim);
+  --ifm-footer-link-color: var(--px-cyan-dim);
+  --ifm-footer-link-hover-color: var(--px-amber);
+  --ifm-footer-title-color: var(--px-cyan);
+}
+
+/* ---- Code: green-on-black terminal -------------------------------------- */
+html[data-pixel='on'] code,
+html[data-pixel='on'] pre {
+  border: 1px solid var(--px-border);
+  background: var(--px-bg-raised) !important;
+}
+html[data-pixel='on'] :not(pre) > code {
+  color: var(--px-amber);
+  padding: 0.1rem 0.4rem;
+}
+
+/* Announcement bar → a status line. Beats the dark-theme tint rule + inline style. */
+html[data-pixel='on'] .theme-announcement-bar {
+  background-color: var(--px-bg-raised) !important;
+  color: var(--px-cyan) !important;
+  border-bottom: 1px solid var(--px-border);
+  font-family: var(--px-body-font);
+}
+html[data-pixel='on'] .theme-announcement-bar a { color: var(--px-amber) !important; }
+
+/* Horizontal rules read as terminal separators. */
+html[data-pixel='on'] hr {
+  border: none;
+  border-top: 1px dashed var(--px-border);
+  background: none;
+}

@@ -1,0 +1,98 @@
+/* Bottom-LEFT dock (never collides with Docusaurus' scroll-to-top, bottom-right).
+   Column: console-font picker on top (pixel mode only), toggle chip below. */
+.dock {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+/* Shared chip look for the toggle + the font picker. Subtle in dark/light. */
+.toggle,
+.fontpick {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  font-family: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: var(--ifm-color-content-secondary);
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+}
+
+.toggle {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.15s ease, color 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.toggle:hover {
+  opacity: 1;
+  color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+.toggle:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+.glyph {
+  line-height: 1;
+}
+.label {
+  font-weight: 600;
+}
+
+.fontlabel {
+  opacity: 0.65;
+}
+.select {
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--ifm-font-color-base);
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0 2px;
+}
+.select:focus-visible {
+  outline: 2px solid var(--ifm-color-primary);
+  outline-offset: 2px;
+}
+
+/* Pixel mode ON → both chips join the terminal. */
+:global(html[data-pixel='on']) .toggle,
+:global(html[data-pixel='on']) .fontpick {
+  font-family: 'Pixelify Sans', 'Fira Code', monospace;
+  color: var(--px-cyan);
+  background: var(--px-bg-raised);
+  border-color: var(--px-cyan);
+  border-radius: 0;
+  opacity: 1;
+  text-shadow: 0 0 6px var(--px-glow);
+  box-shadow: 0 0 14px rgba(92, 216, 230, 0.25);
+}
+:global(html[data-pixel='on']) .toggle:hover {
+  color: var(--px-amber);
+  border-color: var(--px-amber);
+  box-shadow: 0 0 18px rgba(255, 176, 0, 0.35);
+}
+:global(html[data-pixel='on']) .select {
+  color: var(--px-cyan);
+  text-shadow: 0 0 6px var(--px-glow);
+}
+/* Native option list — force a readable dark background (respected by most
+   browsers; the rest fall back to the OS default, still legible). */
+:global(html[data-pixel='on']) .select option {
+  background: var(--px-bg-raised);
+  color: var(--px-cyan);
+  text-shadow: none;
+}

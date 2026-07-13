@@ -6,6 +6,14 @@
   white-space: nowrap;
 }
 
+/* Pixel/CLI theme: the "piphia.ai" wordmark is PINNED to Tamzen (a monospace bitmap
+   face, so the decode animation keeps its constant cell width) regardless of the
+   font picker — only the rest of the page follows --px-body-font. Dark/light keep
+   the Fira Code above. */
+:global(html[data-pixel='on']) .head {
+  font-family: 'Tamzen', 'Fira Code', monospace;
+}
+
 /* resolved readable letters ("piphia.ai") — inherit the big title colour */
 .text {
   color: inherit;

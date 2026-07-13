@@ -45,6 +45,22 @@ const config: Config = {
   // SEO: JSON-LD (SoftwareApplication → rich-result eligibility) plus a couple of
   // social / mobile meta tags. Absolute URLs derive from PRODUCT.url.
   headTags: [
+    // No-FOUC bootstrap for the pixel/CLI theme: mirror the localStorage flag onto
+    // <html data-pixel="on"> synchronously in <head>, before the body paints. The
+    // toggle (src/components/PixelToggle) writes the same key.
+    {
+      tagName: 'script',
+      attributes: {},
+      innerHTML:
+        "(function(){try{var q=new URLSearchParams(location.search),el=document.documentElement;" +
+        "var p=q.get('pixel');" +
+        "if(p==='on'||p==='1')localStorage.setItem('piphia-pixel','on');" +
+        "else if(p==='off'||p==='0')localStorage.removeItem('piphia-pixel');" +
+        "var pf=q.get('pixfont');" +
+        "if(pf!==null){if(pf)localStorage.setItem('piphia-pixfont',pf);else localStorage.removeItem('piphia-pixfont');}" +
+        "if(localStorage.getItem('piphia-pixel')==='on')el.setAttribute('data-pixel','on');" +
+        "var f=localStorage.getItem('piphia-pixfont');if(f)el.setAttribute('data-pixfont',f);}catch(e){}})();",
+    },
     {
       tagName: 'script',
       attributes: {type: 'application/ld+json'},
@@ -88,7 +104,7 @@ const config: Config = {
           feedOptions: {type: ['rss', 'atom'], xslt: true},
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: ['./src/css/custom.css', './src/css/pixel.css'],
         },
       } satisfies Preset.Options,
     ],
