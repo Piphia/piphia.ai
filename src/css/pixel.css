@@ -1,16 +1,16 @@
 /* =========================================================================
    PIXEL / CLI THEME  —  a cyan CRT terminal (matches the Piphia TUI).
 
-   A THIRD, opt-in theme that layers on top of the existing dark/light ones.
-   It is fully self-contained: every rule is scoped under `html[data-pixel='on']`,
-   so when the toggle is OFF nothing here applies and dark/light are untouched.
-   When ON it overrides colours + fonts regardless of the underlying dark/light
-   (the terminal look is its own world). See src/components/PixelToggle +
-   src/theme/Root, and the no-FOUC bootstrap script in docusaurus.config.ts.
+   This is the site's DEFAULT theme in prod: the no-FOUC bootstrap in
+   docusaurus.config.ts sets `<html data-pixel="on">` on every load (`?pixel=off`
+   is a debug escape). Every rule is scoped under `html[data-pixel='on']`, so the
+   plain dark CSS in custom.css stays intact underneath and revert is trivial (drop
+   the bootstrap). The former in-page toggle + console-font <select> were removed for
+   prod; the data-pixfont overrides below stay wired so a picker can be re-added.
 
-   Font: Pixelify Sans (pixel display, latin + cyrillic) for headings / brand /
-   UI chrome; the site's existing Fira Code (monospace, cyrillic) carries body
-   and code so long-form docs stay readable in RU + EN.
+   Font: the common typeface is Tamzen (frozen default below); the hero title is
+   pinned to Tamzen and the tagline to Terminus in their components. All are
+   monospace + cover latin (Tamzen) / latin+cyrillic (Terminus, Fira Code fallback).
    ========================================================================= */
 
 @font-face {
@@ -119,8 +119,11 @@ html[data-pixel='on'] {
   /* Fonts are indirected through two vars so the toggle's <select> can swap the
      whole theme's typeface (data-pixfont on <html>, overrides below). Default =
      Pixelify Sans display + Fira Code body. */
-  --px-display-font: 'Pixelify Sans', 'Fira Code', monospace;
-  --px-body-font: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* FROZEN for prod (the picker is gone): the common typeface is Tamzen. The hero
+     title is pinned to Tamzen and the tagline to Terminus in their components. The
+     data-pixfont overrides below stay wired so a picker can be re-added later. */
+  --px-display-font: 'Tamzen', 'Fira Code', monospace;
+  --px-body-font: 'Tamzen', 'Fira Code', monospace;
 
   --ifm-font-family-base: var(--px-body-font);
   --ifm-font-family-monospace: var(--px-body-font);

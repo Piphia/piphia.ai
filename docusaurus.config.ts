@@ -45,21 +45,16 @@ const config: Config = {
   // SEO: JSON-LD (SoftwareApplication → rich-result eligibility) plus a couple of
   // social / mobile meta tags. Absolute URLs derive from PRODUCT.url.
   headTags: [
-    // No-FOUC bootstrap for the pixel/CLI theme: mirror the localStorage flag onto
-    // <html data-pixel="on"> synchronously in <head>, before the body paints. The
-    // toggle (src/components/PixelToggle) writes the same key.
+    // The pixel/CLI theme is the DEFAULT: set <html data-pixel="on"> synchronously in
+    // <head> (before the body paints, no flash). `?pixel=off` is a debug escape hatch
+    // to preview the plain dark theme. Fonts are frozen in pixel.css (no picker).
     {
       tagName: 'script',
       attributes: {},
       innerHTML:
-        "(function(){try{var q=new URLSearchParams(location.search),el=document.documentElement;" +
-        "var p=q.get('pixel');" +
-        "if(p==='on'||p==='1')localStorage.setItem('piphia-pixel','on');" +
-        "else if(p==='off'||p==='0')localStorage.removeItem('piphia-pixel');" +
-        "var pf=q.get('pixfont');" +
-        "if(pf!==null){if(pf)localStorage.setItem('piphia-pixfont',pf);else localStorage.removeItem('piphia-pixfont');}" +
-        "if(localStorage.getItem('piphia-pixel')==='on')el.setAttribute('data-pixel','on');" +
-        "var f=localStorage.getItem('piphia-pixfont');if(f)el.setAttribute('data-pixfont',f);}catch(e){}})();",
+        "(function(){try{if(new URLSearchParams(location.search).get('pixel')!=='off')" +
+        "document.documentElement.setAttribute('data-pixel','on');}" +
+        "catch(e){document.documentElement.setAttribute('data-pixel','on');}})();",
     },
     {
       tagName: 'script',
@@ -122,7 +117,10 @@ const config: Config = {
   themeConfig: {
     // 1200×630 social/OG card (PNG — SVG doesn't render as a preview on X/Slack/etc.).
     image: 'img/social-card.png',
-    colorMode: {defaultMode: 'dark', respectPrefersColorScheme: true},
+    // Light theme is HIDDEN (not removed): force dark + drop the navbar switch. The
+    // pixel/CLI theme (below) then layers on top. The light CSS in custom.css stays
+    // for an easy revert — flip disableSwitch back to false to expose it again.
+    colorMode: {defaultMode: 'dark', disableSwitch: true, respectPrefersColorScheme: false},
     announcementBar: {
       id: 'preview_v0_1',
       content: `${PRODUCT.name} is in <strong>public preview (v0.1)</strong> — all features are experimental. See the <a href="/changelog">changelog</a>.`,
