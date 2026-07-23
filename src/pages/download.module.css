@@ -80,6 +80,22 @@
   font-weight: 400;
 }
 
+/* Terminal-UI (CLI) sub-section — sits under the GUI builds, divided off. */
+.cliBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px dashed var(--ifm-color-emphasis-300);
+}
+.cliLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-content-secondary);
+}
+
 .after {
   margin: 1rem 0 4rem;
   max-width: 760px;

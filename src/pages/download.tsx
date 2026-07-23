@@ -12,7 +12,9 @@ type Product = {name: string; org: string; repo: string};
 // version-less download (releases/latest/download/<asset>, always the latest
 // release). Builds without an `asset` fall back to the releases page.
 type Build = {label: string; note?: string; asset?: string};
-type Platform = {os: string; blurb: string; builds: Build[]};
+// `cli` = the terminal-UI (piphia-cli) binary for this OS, shown as a separate
+// sub-section under the GUI builds. Version-less asset name, same as `builds`.
+type Platform = {os: string; blurb: string; builds: Build[]; cli?: Build};
 
 // Mobile first, then desktop platforms — laid out in a single horizontal row.
 const PLATFORMS: Platform[] = [
@@ -38,14 +40,29 @@ const PLATFORMS: Platform[] = [
   {
     os: 'Windows',
     blurb:
-      'Zipped bundle — unzip and run. Keep the folder intact: the backend and Python runtime live next to the app.',
-    builds: [{label: 'Windows x64 (.zip)'}],
+      'An installer, or a portable zip you unzip and run. Either way the backend and Python runtime live next to the app — keep the folder intact.',
+    builds: [
+      {label: 'Installer (.exe)', asset: 'Piphia-windows-x64-Setup.exe'},
+      {label: 'Portable (.zip)', asset: 'Piphia-windows-x64-portable.zip'},
+    ],
+    cli: {label: 'piphia-cli.exe', asset: 'piphia-cli-win.exe'},
   },
   {
     os: 'Linux',
     blurb:
-      'Self-contained bundle with the app, backend and Python. Needs a WPE WebKit runtime for the embedded webview.',
-    builds: [{label: 'Linux x64 (.tar.gz)'}],
+      'A .deb for Debian/Ubuntu, or a portable AppImage for any modern distro. Self-contained — app, backend, Python and the WPE WebKit webview runtime.',
+    builds: [
+      {label: '.deb (Debian/Ubuntu)', asset: 'Piphia-linux-amd64.deb'},
+      {label: 'AppImage (portable)', asset: 'Piphia-linux-x86_64.AppImage'},
+    ],
+    cli: {label: 'piphia-cli', asset: 'piphia-cli-linux'},
+  },
+  {
+    os: 'FreeBSD',
+    blurb:
+      'Terminal UI only — a single self-contained binary that runs the whole workspace in your shell: files, agents, databases, charts and automations. No GUI build yet.',
+    builds: [],
+    cli: {label: 'piphia-cli', asset: 'piphia-cli-freebsd'},
   },
 ];
 
@@ -68,9 +85,9 @@ export default function Download(): ReactNode {
 
       <main className="container">
         <div className={styles.note}>
-          macOS builds are ready below — served from GitHub Releases. Mobile,
-          Windows and Linux downloads are on the way; those buttons open the
-          releases page for now.
+          Desktop apps (macOS, Windows, Linux) plus the terminal UI — the CLI for
+          Windows, Linux and FreeBSD — are ready below, served from GitHub Releases.
+          Mobile (Android / iOS) is on the way; those buttons open the releases page.
         </div>
 
         <div className={styles.grid}>
@@ -92,6 +109,19 @@ export default function Download(): ReactNode {
                   </Link>
                 ))}
               </div>
+              {p.cli && (
+                <div className={styles.cliBlock}>
+                  <div className={styles.cliLabel}>Terminal · CLI</div>
+                  <Link
+                    className="button button--secondary button--block"
+                    to={p.cli.asset ? `${dlBase}/${p.cli.asset}` : releasesUrl}>
+                    {p.cli.label}
+                    {p.cli.note ? (
+                      <span className={styles.buildNote}> · {p.cli.note}</span>
+                    ) : null}
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>
