@@ -36,6 +36,7 @@ const PLATFORMS: Platform[] = [
       {label: 'Intel (.dmg)', asset: 'Piphia-macos-intel.dmg'},
       {label: 'Universal (.dmg)', note: 'Intel + Apple Silicon', asset: 'Piphia-macos-universal.dmg'},
     ],
+    cli: {label: 'piphia-cli', note: 'Apple Silicon', asset: 'piphia-cli-macos'},
   },
   {
     os: 'Windows',
@@ -86,8 +87,9 @@ export default function Download(): ReactNode {
       <main className="container">
         <div className={styles.note}>
           Desktop apps (macOS, Windows, Linux) plus the terminal UI — the CLI for
-          Windows, Linux and FreeBSD — are ready below, served from GitHub Releases.
-          Mobile (Android / iOS) is on the way; those buttons open the releases page.
+          macOS, Windows, Linux and FreeBSD — are ready below, served from GitHub
+          Releases. Mobile (Android / iOS) is on the way; those buttons open the
+          releases page.
         </div>
 
         <div className={styles.grid}>
